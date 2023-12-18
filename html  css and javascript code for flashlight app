@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashlight App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="flashlight-container">
+        <label class="switch">
+            <input type="checkbox" id="flashlightToggle" onclick="toggleFlashlight()">
+            <span class="slider round"></span>
+        </label>
+        <p id="flashlightStatus">Flashlight is OFF</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+const flashlightToggle = document.getElementById('flashlightToggle');
+const flashlightStatus = document.getElementById('flashlightStatus');
+
+function toggleFlashlight() {
+    if (flashlightToggle.checked) {
+        // Turn on the flashlight
+        flashlightStatus.textContent = 'Flashlight is ON';
+        // You can add additional logic to control the flashlight on state
+    } else {
+        // Turn off the flashlight
+        flashlightStatus.textContent = 'Flashlight is OFF';
+        // You can add additional logic to control the flashlight off state
+    }
+}
+
+
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
