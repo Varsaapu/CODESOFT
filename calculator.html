@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scientific Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #calculator {
+      width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #display {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background-color: #f9f9f9;
+    }
+
+    button {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #clear {
+      width: 100%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="calculator">
+  <div id="display"></div>
+  <button onclick="appendNumber('7')">7</button>
+  <button onclick="appendNumber('8')">8</button>
+  <button onclick="appendNumber('9')">9</button>
+  <button onclick="setOperator('+')">+</button><br>
+  <button onclick="appendNumber('4')">4</button>
+  <button onclick="appendNumber('5')">5</button>
+  <button onclick="appendNumber('6')">6</button>
+  <button onclick="setOperator('-')">-</button><br>
+  <button onclick="appendNumber('1')">1</button>
+  <button onclick="appendNumber('2')">2</button>
+  <button onclick="appendNumber('3')">3</button>
+  <button onclick="setOperator('*')">*</button><br>
+  <button onclick="appendNumber('0')">0</button>
+  <button onclick="appendDecimal()">.</button>
+  <button onclick="calculate()">=</button>
+  <button onclick="setOperator('/')">/</button><br>
+  <button onclick="calculateSquareRoot()">√</button>
+  <button onclick="calculateSin()">sin</button>
+  <button onclick="calculateCos()">cos</button>
+  <button id="clear" onclick="clearCalculator()">Clear</button>
+</div>
+
+<script>
+  let currentInput = '';
+  let currentOperator = '';
+  let storedNumber = null;
+
+  function updateDisplay() {
+    document.getElementById('display').innerText = currentInput || '0';
+  }
+
+  function appendNumber(number) {
+    currentInput += number;
+    updateDisplay();
+  }
+
+  function appendDecimal() {
+    if (!currentInput.includes('.')) {
+      currentInput += '.';
+      updateDisplay();
+    }
+  }
+
+  function setOperator(operator) {
+    if (currentInput !== '') {
+      if (currentOperator !== '') {
+        calculate();
+      }
+      currentOperator = operator;
+      storedNumber = parseFloat(currentInput);
+      currentInput = '';
+      updateDisplay();
+    }
+  }
+
+  function calculate() {
+    if (currentOperator !== '' && currentInput !== '') {
+      const num1 = storedNumber || 0;
+      const num2 = parseFloat(currentInput);
+      let result;
+      switch (currentOperator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          if (num2 !== 0) {
+            result = num1 / num2;
+          } else {
+            alert("Cannot divide by zero");
+            clearCalculator();
+            return;
+          }
+          break;
+      }
+      currentInput = result.toString();
+      currentOperator = '';
+      storedNumber = null;
+      updateDisplay();
+    }
+  }
+
+  function calculateSquareRoot() {
+    if (currentInput !== '') {
+      const num = parseFloat(currentInput);
+      if (num >= 0) {
+        currentInput = Math.sqrt(num).toString();
+        updateDisplay();
+      } else {
+        alert("Cannot calculate square root of a negative number");
+        clearCalculator();
+      }
+    }
+  }
+
+  function calculateSin() {
+    if (currentInput !== '') {
+      const num = parseFloat(currentInput);
+      const sinValue = Math.sin(num * (Math.PI / 180)); // Convert to radians
+      currentInput = sinValue.toString();
+      updateDisplay();
+    }
+  }
+
+  function calculateCos() {
+    if (currentInput !== '') {
+      const num = parseFloat(currentInput);
+      const cosValue = Math.cos(num * (Math.PI / 180)); // Convert to radians
+      currentInput = cosValue.toString();
+      updateDisplay();
+    }
+  }
+
+  function clearCalculator() {
+    currentInput = '';
+    currentOperator = '';
+    storedNumber = null;
+    updateDisplay();
+  }
+</script>
+
+</body>
+</html>
+
